@@ -39,5 +39,22 @@ internal static class UpdateInstaller
         // portable directory merely because an update succeeded.
         return 0;
     }
+    /// The list is taken once at startup, so an update started later in this session is never touched.
+    internal static void RemoveLeftoversInBackground()
+    {
+        _=Task.Run(async()=>
+        {
+            try
+            {
+                var folders=UpdateLeftovers.Find(AppContext.BaseDirectory,DateTime.UtcNow);
+                for(var attempt=0;attempt<5&&folders.Count>0;attempt++)
+                {
+                    await Task.Delay(TimeSpan.FromSeconds(5));
+                    folders=UpdateLeftovers.Remove(folders);
+                }
+            }
+            catch(Exception error)when(error is IOException or UnauthorizedAccessException){/* Tried again at the next start. */}
+        });
+    }
     private sealed record InstallRequest(int ProcessId,string Target,string Payload,string Stage);
 }

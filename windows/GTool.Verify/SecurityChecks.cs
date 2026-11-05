@@ -21,6 +21,7 @@ internal static class SecurityChecks
         if(!OperatingSystem.IsWindows())return;
 
         ToolVersionChecks(check,root);
+        UpdateLeftoverChecks(check,root);
         var folder=Path.Combine(root,"Provenance");Directory.CreateDirectory(folder);
         var marked=Path.Combine(folder,"Downloaded.zip");
         using(var zip=ZipFile.Open(marked,ZipArchiveMode.Create)){using var entry=new StreamWriter(zip.CreateEntry("Inner/program.txt").Open());entry.Write("content");}
@@ -34,6 +35,31 @@ internal static class SecurityChecks
         check(Provenance.Read(converted)==mark,"A converted downloaded archive lost the internet mark");
         var local=ArchiveEngine.Extract(plain,Path.Combine(folder,"FromPlain"))[0];
         check(Provenance.Read(Path.Combine(local,"Inner","program.txt")) is null,"A local archive's files were marked as downloaded");
+    }
+    private static void UpdateLeftoverChecks(Action<bool,string> check,string root)
+    {
+        const string id="0123456789abcdef0123456789abcdef";const string other="fedcba9876543210fedcba9876543210";
+        var parent=Path.Combine(root,"Update leftovers");var target=Path.Combine(parent,"G-Tool");Directory.CreateDirectory(Path.Combine(target,"data"));File.WriteAllText(Path.Combine(target,"G-Tool.exe"),"new");
+        string Folder(string name){var path=Path.Combine(parent,name);Directory.CreateDirectory(path);File.WriteAllText(Path.Combine(path,"file.txt"),"sample");return path;}
+        string Stage(string name,string requestTarget,bool payload){var path=Folder(name);File.WriteAllText(Path.Combine(path,"request.json"),System.Text.Json.JsonSerializer.Serialize(new{ProcessId=1,Target=requestTarget,Payload=Path.Combine(path,"payload"),Stage=path}));if(payload)Directory.CreateDirectory(Path.Combine(path,"payload"));return path;}
+        var backup=Folder("G-Tool.backup-"+id);var finished=Stage(".gtool-update-"+id,target,false);
+        var running=Stage(".gtool-update-"+other,target,true);
+        var foreign=Stage(".gtool-update-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",Path.Combine(parent,"Another copy"),false);
+        var noRequest=Folder(".gtool-update-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+        var kept=new[]{Folder("G-Tool.backup-mine"),Folder("G-Tool.backup-"+id+"x"),Folder("Other.backup-"+id),Folder(".gtool-update-notes"),Folder("G-Tool backup"),Folder("Documents"),running,foreign,noRequest};
+        var linked=Path.Combine(parent,"G-Tool.backup-cccccccccccccccccccccccccccccccc");var linkTarget=Folder("Linked data");Directory.CreateSymbolicLink(linked,linkTarget);
+        var now=DateTime.UtcNow;var selected=UpdateLeftovers.Find(target+Path.DirectorySeparatorChar,now);
+        check(selected.Count==2&&selected.Contains(backup)&&selected.Contains(finished),"Update cleanup chose the wrong folders: "+string.Join(", ",selected.Select(Path.GetFileName)));
+        check(!selected.Contains(target),"Update cleanup selected the running app");
+        foreach(var folder in kept)check(!selected.Contains(folder),"Update cleanup selected an unrelated folder: "+Path.GetFileName(folder));
+        check(!selected.Contains(linked),"Update cleanup followed a linked folder");
+        var later=UpdateLeftovers.Find(target,now.AddDays(2));
+        check(later.Contains(running)&&later.Contains(noRequest)&&!later.Contains(foreign),"Abandoned update folders were handled differently than expected");
+        var remaining=UpdateLeftovers.Remove(selected);
+        check(remaining.Count==0&&!Directory.Exists(backup)&&!Directory.Exists(finished),"Update leftovers were not removed");
+        check(File.Exists(Path.Combine(target,"G-Tool.exe"))&&kept.All(Directory.Exists)&&File.Exists(Path.Combine(linkTarget,"file.txt")),"Update cleanup removed something it must keep");
+        check(UpdateLeftovers.Find(Path.GetPathRoot(parent)!,now).Count==0,"Update cleanup ran for a drive root");
+        Directory.Delete(linked);
     }
     private static void ToolVersionChecks(Action<bool,string> check,string root)
     {
