@@ -2,7 +2,7 @@ using System.Windows;
 using System.Windows.Controls;
 using GTool.Core;
 namespace GTool.Windows;
-public sealed partial class SettingsWindow
+public sealed partial class SettingsView
 {
     private void FormatDefaults()
     {
@@ -25,8 +25,8 @@ public sealed partial class SettingsWindow
             if(fields.Count+choices.Count==0&&metadata.Parent is null)panel.Children.Add(L10n.Label(new TextBlock{Text="This format uses its original document structure. No export defaults are needed.",TextWrapping=TextWrapping.Wrap,Margin=new(4,18,4,18)}));
             double Value(string key,double fallback)=>fields.TryGetValue(key,out var field)?NumericInput.ParseFinite(field.Text):fallback;
             string Picked(string key,string fallback)=>choices.TryGetValue(key,out var field)?(string)field.SelectedItem:fallback;
-            panel.Children.Add(MainWindow.Button("Save defaults",()=>{try{store.SetProfile(name,profile with{Quality=Value("quality",profile.Quality*100)/100,AudioBitrate=checked((int)Value("bitrate",profile.AudioBitrate)),SampleDepth=Picked("depth",profile.SampleDepth),MaxVideoHeight=checked((int)Value("height",profile.MaxVideoHeight)),GifFrameRate=checked((int)Value("fps",profile.GifFrameRate)),GifWidth=checked((int)Value("width",profile.GifWidth)),Dpi=checked((int)Value("dpi",profile.Dpi)),Layout=Picked("layout",profile.Layout),EpubLayout=Picked("epub",profile.EpubLayout),PreserveMetadata=metadata.IsChecked==true});changed();}catch(Exception error)when(error is ArgumentException or FormatException or OverflowException or IOException or UnauthorizedAccessException){MessageBox.Show(this,L10n.Text(error.Message),L10n.Text("Check export defaults"));}}));
-            panel.Children.Add(MainWindow.Button("Restore defaults",()=>{try{store.SetProfile(name,new());Render();changed();}catch(Exception error)when(error is IOException or UnauthorizedAccessException){MessageBox.Show(this,L10n.Text(error.Message),L10n.Text("Defaults could not be restored"));}}));
+            panel.Children.Add(MainWindow.Button("Save defaults",()=>{try{store.SetProfile(name,profile with{Quality=Value("quality",profile.Quality*100)/100,AudioBitrate=checked((int)Value("bitrate",profile.AudioBitrate)),SampleDepth=Picked("depth",profile.SampleDepth),MaxVideoHeight=checked((int)Value("height",profile.MaxVideoHeight)),GifFrameRate=checked((int)Value("fps",profile.GifFrameRate)),GifWidth=checked((int)Value("width",profile.GifWidth)),Dpi=checked((int)Value("dpi",profile.Dpi)),Layout=Picked("layout",profile.Layout),EpubLayout=Picked("epub",profile.EpubLayout),PreserveMetadata=metadata.IsChecked==true});changed();}catch(Exception error)when(error is ArgumentException or FormatException or OverflowException or IOException or UnauthorizedAccessException){MessageBox.Show(OwnerWindow,L10n.Text(error.Message),L10n.Text("Check export defaults"));}}));
+            panel.Children.Add(MainWindow.Button("Restore defaults",()=>{try{store.SetProfile(name,new());Render();changed();}catch(Exception error)when(error is IOException or UnauthorizedAccessException){MessageBox.Show(OwnerWindow,L10n.Text(error.Message),L10n.Text("Defaults could not be restored"));}}));
         }
         select.SelectionChanged+=(_,_)=>Render();Render();
     }
