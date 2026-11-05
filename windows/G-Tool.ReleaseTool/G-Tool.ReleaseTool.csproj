@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Publisher's tool only: never shipped with the app. Creates the signing key and signed release files. -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>GTool.ReleaseTool</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../GTool.Core/GTool.Core.csproj" />
+  </ItemGroup>
+</Project>

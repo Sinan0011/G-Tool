@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><RootNamespace>GTool.Core</RootNamespace><DebugType>none</DebugType><DebugSymbols>false</DebugSymbols><RestorePackagesWithLockFile>true</RestorePackagesWithLockFile></PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Security.Cryptography.Pkcs" Version="10.0.13" />
+    <PackageReference Include="PDFsharp" Version="6.2.4" />
+    <PackageReference Include="BouncyCastle.Cryptography" Version="2.7.0" />
+    <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="15.0.0" />
+    <PackageReference Include="ZXing.Net" Version="0.16.11" />
+    <PackageReference Include="SharpCompress" Version="0.50.5" />
+    <PackageReference Include="PdfPig" Version="0.1.16" />
+  </ItemGroup>
+  <ItemGroup><EmbeddedResource Include="../../Resources/FeatureCatalog.json" LogicalName="GTool.FeatureCatalog.json" /></ItemGroup>
+  <ItemGroup><EmbeddedResource Include="Resources/Turkish.json" LogicalName="GTool.Turkish.json" /></ItemGroup>
+  <ItemGroup><EmbeddedResource Include="Resources/LatinWords.json" LogicalName="GTool.LatinWords.json" /></ItemGroup>
+  <ItemGroup><InternalsVisibleTo Include="GTool.Verify" /></ItemGroup>
+</Project>
