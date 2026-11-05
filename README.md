@@ -1,48 +1,38 @@
 <p align="center"><img src="windows/GTool.Windows/Assets/source/wordmark-dark.webp" width="520" alt="G-Tool"></p>
 
+<p align="center"><b>English</b> | <a href="README.tr.md">Türkçe</a></p>
+
 # G-Tool
 
-Windows için yerel dosya dönüştürme ve düzenleme aracı. Dosyaları sürükle, çarkı aç, ne yapmak istediğini seç. Dosyaların bilgisayarında kalır.
+A local file conversion and editing tool for Windows. Drag your files in, open the wheel and choose what to do. Your files stay on your computer.
 
-[English](#english)
+## Features
 
-## Özellikler
+- **Conversion:** between image, document, audio, video, archive and spreadsheet formats
+- **Photos:** crop, annotate, redact, frame, collage and colour adjustments
+- **Video and audio:** trim, split, merge, mute and change speed
+- **PDF:** merge, split, organise pages and compress
+- **Web downloads:** media from public links
+- **Design:** glass interface that shows your wallpaper, dark and light themes, English and Turkish
 
-- **Dönüştürme:** görsel, belge, ses, video, arşiv ve e-tablo biçimleri arasında dönüştürme
-- **Fotoğraf:** kırpma, işaretleme, karartma, çerçeve, kolaj ve renk ayarları
-- **Video ve ses:** kırpma, bölme, birleştirme, sesi kapatma ve hız değiştirme
-- **PDF:** birleştirme, bölme, sayfa düzenleme ve sıkıştırma
-- **Web'den indirme:** herkese açık bağlantılardan medya indirme
-- **Tasarım:** duvar kağıdını gösteren cam arayüz, koyu ve açık tema, Türkçe ve İngilizce
+## Installation
 
-## Kurulum
+1. Download `G-Tool-Windows-x64.zip` from the [latest release](https://github.com/Sinan0011/G-Tool/releases/latest).
+2. Extract the whole ZIP into a folder of your own that you can write to, such as Documents. Do not use `Program Files` or the top level of a drive (such as `C:\`), otherwise updates cannot be installed.
+3. Open `G-Tool.exe`. You do not need to install .NET.
 
-1. [Son sürümden](https://github.com/Sinan0011/G-Tool/releases/latest) `G-Tool-Windows-x64.zip` dosyasını indir.
-2. ZIP'in tamamını kendine ait, yazılabilir bir klasöre çıkar. `Program Files` kullanma, yoksa güncellemeler kurulamaz.
-3. `G-Tool.exe` dosyasını aç. .NET kurmana gerek yok.
+The app does not have a code signing certificate yet, so Windows SmartScreen may show a warning. Choose **More info**, then **Run anyway**.
 
-Uygulama henüz bir kod imzalama sertifikasına sahip olmadığı için Windows SmartScreen uyarı gösterebilir.
+On first start G-Tool offers to download the tools it needs, such as FFmpeg, yt-dlp, Deno and LibreOffice, from their official sources and checks their fingerprints. It also asks once whether it should start when you sign in.
 
-İlk açılışta "Eksik araçları indir" adımı FFmpeg, yt-dlp, Deno ve LibreOffice gibi araçları kendi resmi kaynaklarından indirir ve parmak izlerini doğrular.
+The **Help** page inside the app explains every feature, the file buttons and the keyboard shortcuts.
 
-## Güncellemeler
+## Updates
 
-Yeni sürüm çıktığında uygulama açıksa Windows bildirimi gösterir, tek tıkla kurulur. Her güncelleme imzalıdır; imzası doğrulanmayan dosya kurulmaz. İnternet yoksa uygulama normal çalışmaya devam eder. Otomatik kontrol Ayarlar'dan kapatılabilir.
+G-Tool checks for a new version when it opens and every hour while it runs. When one is available, Windows shows a notice and you install it with one click. Every update is signed, and a file whose signature cannot be verified is not installed. The old version is removed after the new one starts. Without internet the app keeps working normally. Automatic checks can be turned off in Settings.
 
-## Kaynak ve lisans
+## Source and license
 
-[Orkun Işıtmak](https://github.com/orkunisitmak)'ın [Nashi](https://github.com/orkunisitmak/nashi-app) (MIT) projesi temel alınarak geliştirilmiştir.
+Built on the [Nashi](https://github.com/orkunisitmak/nashi-app) (MIT) project by [Orkun Işıtmak](https://github.com/orkunisitmak).
 
-MIT lisansıyla dağıtılır, bkz. [LICENSE](LICENSE). Birlikte kullanılan bileşenlerin kendi lisansları vardır, bkz. [Windows üçüncü taraf bildirimleri](windows/THIRD-PARTY-NOTICES.txt) ve [Resources/licenses](Resources/licenses).
-
----
-
-## English
-
-G-Tool is a local file conversion and editing tool for Windows. Drag files, open the wheel, choose what to do. Your files stay on your computer.
-
-**Install:** download `G-Tool-Windows-x64.zip` from the [latest release](https://github.com/Sinan0011/G-Tool/releases/latest), extract the whole archive into a writable folder of your own (not `Program Files`) and run `G-Tool.exe`. The app is not code-signed yet, so Windows SmartScreen may warn.
-
-**Updates:** while the app is running it notifies you about new versions and installs them with one click. Every update is signed. Without internet the app keeps working normally.
-
-**Source and license:** built on the [Nashi](https://github.com/orkunisitmak/nashi-app) (MIT) project by [Orkun Işıtmak](https://github.com/orkunisitmak). Released under the MIT License, see [LICENSE](LICENSE). Bundled components keep their own licenses, see the [Windows third-party notices](windows/THIRD-PARTY-NOTICES.txt) and [Resources/licenses](Resources/licenses).
+Released under the MIT License, see [LICENSE](LICENSE). Bundled components keep their own licenses, see the [Windows third-party notices](windows/THIRD-PARTY-NOTICES.txt) and [Resources/licenses](Resources/licenses).
