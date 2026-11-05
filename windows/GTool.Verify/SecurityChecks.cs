@@ -22,6 +22,9 @@ internal static class SecurityChecks
 
         ToolVersionChecks(check,root);
         UpdateLeftoverChecks(check,root);
+        var launchSettings=Path.Combine(root,"Launch question");Directory.CreateDirectory(launchSettings);File.WriteAllText(Path.Combine(launchSettings,"preferences.json"),"{\"Language\":\"tr\",\"KeepInTray\":true}");
+        var olderSettings=new PreferencesStore(launchSettings);check(!olderSettings.Value.LaunchAtLoginAsked&&olderSettings.Value.Language=="tr","Settings from an older version were not asked about starting at sign-in");
+        olderSettings.Save(olderSettings.Value with{LaunchAtLoginAsked=true});check(new PreferencesStore(launchSettings).Value.LaunchAtLoginAsked,"The start-at-sign-in answer was not kept");
         var folder=Path.Combine(root,"Provenance");Directory.CreateDirectory(folder);
         var marked=Path.Combine(folder,"Downloaded.zip");
         using(var zip=ZipFile.Open(marked,ZipArchiveMode.Create)){using var entry=new StreamWriter(zip.CreateEntry("Inner/program.txt").Open());entry.Write("content");}

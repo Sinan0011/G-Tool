@@ -19,7 +19,7 @@ internal static class UIAudit
 {
     internal static readonly string[] SceneIds =
     [
-        "home.empty", "home.selected", "library", "settings.general", "settings.formats",
+        "home.empty", "home.selected", "home.launch-question", "library", "settings.general", "settings.formats",
         "settings.updates", "help", "settings.page", "wheel.pdf-multiple", "editor.crop-image", "editor.annotate-image", "editor.frame-image"
     ];
     private static readonly string[] Appearances = ["light", "dark"];
@@ -179,11 +179,12 @@ internal static class UIAudit
         {
             if (capture.Scene == "library") owner.ShowLibrary(true);
             if (capture.Scene == "help") owner.ShowPage(AppPage.Help);
+            if (capture.Scene == "home.launch-question") { owner.LaunchAtLoginEnabled = () => false; owner.SetLaunchAtLogin = _ => { }; owner.ResetLaunchQuestionForCheck(); owner.OfferLaunchAtLogin(); }
             if (capture.Scene == "settings.page") owner.ShowPage(AppPage.Settings);
             ShowAtMinimum(owner);
             subject = capture.Scene switch
             {
-                "home.empty" or "home.selected" or "library" or "help" or "settings.page" => owner,
+                "home.empty" or "home.selected" or "home.launch-question" or "library" or "help" or "settings.page" => owner,
                 "settings.general" or "settings.formats" or "settings.updates" => Settings(owner, preferences, library, capture.Scene),
                 "wheel.pdf-multiple" => new WheelWindow(owner, owner.UIAuditToolChoices, _ => { }),
                 "editor.crop-image" => new ToolEditor(owner, "crop", "Crop Image", fixtures.Image, preview: fixtures.Bitmap),
@@ -296,6 +297,7 @@ internal static class UIAudit
         {
             "home.empty" => subject == owner && !owner.LibraryVisible && owner.SelectedFiles.Count == 0,
             "home.selected" => subject == owner && !owner.LibraryVisible && owner.SelectedFiles.SequenceEqual(new[] { fixtures.Image }),
+            "home.launch-question" => subject == owner && owner.LaunchBannerVisible && !owner.LibraryVisible,
             "help" => subject == owner && owner.HelpVisible && owner.HelpPage.IsVisible,
             "settings.page" => subject == owner && owner.SettingsVisible && owner.SettingsPage.IsVisible && Descendants<ListBox>(owner).Any(list => Equals(list.SelectedItem, "General")),
             "library" => subject == owner && owner.LibraryVisible && Descendants<ListBox>(owner).Any() && owner.SearchField.IsVisible,

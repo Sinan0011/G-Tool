@@ -1473,5 +1473,12 @@
   "If something goes wrong": "Sorun çıkarsa",
   "If Windows says it protected your PC, choose More info, then Run anyway. G-Tool does not have a code signing certificate yet.": "Windows bilgisayarını koruduğunu söylerse Ek bilgi'ye, sonra Yine de çalıştır'a bas. G-Tool'un henüz kod imzalama sertifikası yok.",
   "Keep G-Tool in a folder you can write to, such as Documents. Program Files or the top level of a drive can stop updates from installing.": "G-Tool'u Belgeler gibi yazabildiğin bir klasörde tut. Program Files veya bir sürücünün en üst düzeyi güncellemelerin kurulmasını engelleyebilir.",
-  "If a tool does not download, check your internet connection and choose Set up media tools or Set up office tools again under Tools on Home.": "Bir araç inmezse internet bağlantını kontrol et ve Ana Sayfa'daki Araçlar bölümünden Medya araçlarını kur veya Ofis araçlarını kur'a yeniden bas."
+  "If a tool does not download, check your internet connection and choose Set up media tools or Set up office tools again under Tools on Home.": "Bir araç inmezse internet bağlantını kontrol et ve Ana Sayfa'daki Araçlar bölümünden Medya araçlarını kur veya Ofis araçlarını kur'a yeniden bas.",
+  "Start G-Tool when you sign in?": "G-Tool oturum açtığında başlasın mı?",
+  "It waits in the tray and tells you about updates on time. You can change this in Settings.": "Tepside bekler, güncellemeleri zamanında haber verir. Bunu Ayarlar'dan değiştirebilirsin.",
+  "Yes, start it": "Evet, başlasın",
+  "Not now": "Şimdi değil",
+  "G-Tool will start when you sign in.": "G-Tool oturum açtığında başlayacak.",
+  "G-Tool could not be added to startup. You can try again in Settings.": "G-Tool başlangıca eklenemedi. Ayarlar'dan yeniden deneyebilirsin.",
+  "G-Tool checks for updates when it opens and every hour while it runs. To get notices on time, turn on Launch at login in Settings, under General.": "G-Tool güncellemeleri açılışta ve çalıştığı sürece saatte bir denetler. Bildirimleri zamanında almak için Ayarlar'daki Genel bölümünden Oturum açıldığında başlat seçeneğini aç."
 }
